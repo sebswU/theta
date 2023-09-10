@@ -1,29 +1,11 @@
 import djitellopy
 from djitellopy import Tello
 import cv2, math, time
-import numpy
+import numpy as np
 
 import argparse
 import os
 import keyboard
-
-"""
-parser.add_argument('--face_cascade',help='Path to face cascade.', default=absol_path)
-args = parser.parse_args()
-face_cascade_name = args.face_cascade
-
-face_cascade = cv2.CascadeClassifier(haarcascades_path)
-if not face_cascade.load(f"haarcascade_frontalface_alt.xml"):
-    print('error loading cascade classifier')
-    exit(0)
-
-def haar_detectFace(frame):
-    frame_gray = cv2.cvtColor(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR), cv2.COLOR_BGR2GRAY)
-
-    face = face_cascade.detectMultiScale(frame_gray)
-    for (x,y,w,h) in face:
-        cv2.rectangle(frame_gray, (x,y),(x+w, y+h),(0,255,0), -1,8)
-"""
 
 drone = Tello()
 drone.connect()
@@ -61,6 +43,18 @@ while True:
         drone.move_up(30)
     elif key == ord('f'):
         drone.move_down(30)
-
+def threeSixty(sps=1):
+    coor = np.ndarray(shape=(3,3), dtype=float)
+    theta = np.ndarray(shape=3, dtype=int)
+    cv2.imwrite("picture.png", frame_read.frame)
+    drone.curve_xyz_speed(0,0,0,-300,173,0, 50)
+    drone.rotate_counter_clockwise(120)
+    cv2.imwrite("picture1.png", frame_read.frame)
+    drone.curve_xyz_speed(0, 0, 0, 0, -346, 0, 50)
+    drone.rotate_counter_clockwise(120)
+    cv2.imwrite("picture2.png", frame_read.frame)
+    drone.curve_xyz_speed(0, 0, 0, 300, 173, 0, 50)
+    drone.rotate_counter_clockwise(120)
+    return 0
 drone.land()
 
